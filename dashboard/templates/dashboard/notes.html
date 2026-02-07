@@ -1,0 +1,49 @@
+{% extends 'dashboard/base.html' %} 
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        {% for note in notes %}
+        <div class="col-md-3">
+            <a href="{% url 'notes-detail' note.id %}" class="text-decoration-none text-dark">
+                <div class="card">
+                    <div class="card-header">{{ forloop.counter }}. {{ note.title }}</div>
+                    <div class="card-body">{{ note.description | slice:":100" }}</div>
+                    <div class="card-footer mt-auto "><a href="{% url 'delete-note' note.id %}">
+                        <i class="fa fa-trash fa-2x"></i></a>
+                        <a href="{% url 'notes-detail' note.id %}">
+                        <i class="fa fa-edit fa-2x"></i></a>
+                        {% if note.updated_at %}
+                            Updated at ({{ note.updated_at|date:"M d, Y, H:i" }})
+                        {% else %}
+                            ({{ note.created_at|date:"M d, Y H:i" }})
+                        {% endif %}
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+
+        <br><br>
+
+    </div>
+</div>
+<br><br>
+<div class="container">
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Create Notes</legend>
+        </fieldset>
+        {{ form|crispy }}
+        <div class="form-group">
+            <button href="" class="btn btn-outline-info" type="submit">
+                Create
+            </button>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}
