@@ -36,19 +36,19 @@ def SignupPage(request):
                     'email': email
                 }
             }
-            return render(request, 'signup.html', context)
+            return render(request, 'account/signup.html', context)
 
         my_user = User.objects.create_user(uname, email, pass1)
         my_user.save()
-        return redirect('login')
+        return redirect('LoginPage')
 
-    return render(request, 'signup.html')
+    return render(request, 'account/signup.html')
 
 # Login
 def LoginPage(request):
     if request.user.is_authenticated:
         messages.warning(request, "You are already logged in. Please logout first.")
-        return redirect('homepage')
+        return redirect('home')
 
     error_message = None
     if request.method == 'POST':
@@ -61,10 +61,10 @@ def LoginPage(request):
         else:
             error_message = "Username or Password is incorrect!!!"
 
-    return render(request, 'login.html', {'error_message': error_message})
+    return render(request, 'account/login.html', {'error_message': error_message})
 
 # Logout
-@login_required(login_url='login')
+@login_required(login_url='LoginPage')
 def LogoutPage(request):
     logout(request)
     messages.success(request, "You have successfully logged out.")

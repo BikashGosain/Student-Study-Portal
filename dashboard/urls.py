@@ -1,22 +1,23 @@
 from django.urls import path
+from django.contrib.auth.decorators import login_required
 from . import views
 
 urlpatterns = [
     path('', views.home, name='dashboard'),
     # NOtes
-    path('notes/', views.notes, name='notes'),
-    path('delete-note/<int:pk>/', views.delete_note, name='delete-note'),
-    path('notes-detail/<int:pk>/', views.NotesDetail, name='notes-detail'),
+    path('notes/', login_required(views.notes, login_url='LoginPage'), name='notes'),
+    path('delete-note/<int:pk>/', login_required(views.delete_note, login_url='LoginPage'), name='delete-note'),
+    path('notes-detail/<int:pk>/', login_required(views.NotesDetail, login_url='LoginPage'), name='notes-detail'),
     # Homework
-    path('homework/', views.homework, name='homework'),
-    path('update-homework/<int:pk>/', views.update_homework, name='update-homework'),
-    path('delete-homework/<int:pk>/', views.delete_homework, name='delete-homework'),
+    path('homework/', login_required(views.homework, login_url='LoginPage'), name='homework'),
+    path('update-homework/<int:pk>/', login_required(views.update_homework, login_url='LoginPage'), name='update-homework'),
+    path('delete-homework/<int:pk>/', login_required(views.delete_homework, login_url='LoginPage'), name='delete-homework'),
     # youtube
     path('youtube/', views.youtube, name='youtube'),
     # todo
-    path('todo/', views.todo, name='todo'),
-    path('update-todo/<int:pk>/', views.update_todo, name='update-todo'),
-    path('delete-todo/<int:pk>/', views.delete_todo, name='delete-todo'),
+    path('todo/', login_required(views.todo, login_url='LoginPage'), name='todo'),
+    path('update-todo/<int:pk>/', login_required(views.update_todo, login_url='LoginPage'), name='update-todo'),
+    path('delete-todo/<int:pk>/', login_required(views.delete_todo, login_url='LoginPage'), name='delete-todo'),
     
     #books
     path('books/', views.books, name='books'),
