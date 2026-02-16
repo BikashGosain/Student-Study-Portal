@@ -70,7 +70,16 @@ form {
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-form fieldset legend {
+/* Form fieldset */
+form fieldset {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+form legend {
     font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 1rem;

@@ -1,36 +1,35 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'dashboard/css/notes.css' %}">
+{% endblock extra_css %}
+
 {% block content %}
-<div class="container text-center mt-4">
+<div class="container">
     <h2>Search YouTube Videos</h2>
     <p>Enter a query to search videos</p>
 
-    <form method="post" class="mb-4">
+    <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" class="btn btn-primary" value="Search">
+        <input type="submit" value="Search">
     </form>
 
     {% if results %}
         <div class="row">
         {% for video in results %}
-            <div class="col-md-6 mb-3">
-                <a href="{{ video.link }}" target="_blank">
-                    <div class="card">
-                        <img class="img-fluid" src="{{ video.thumbnail }}" alt="{{ video.title }}">
-                        <div class="card-body text-left">
-                            
-
-                            <h5 class="card-title">{{ video.title }}</h5>
-                            <p class="card-text">
-                                Channel: {{ video.channel }} <br>
-                                Duration: {{ video.duration }} sec <br>
-                                Published: {{ video.published }}
-                            </p>
-                        </div>
-                    </div>
-                </a>
-            </div>
+            <a href="{{ video.link }}" target="_blank" class="card">
+                <img src="{{ video.thumbnail }}" alt="{{ video.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ video.title }}</h5>
+                    <p class="card-text">
+                        Channel: {{ video.channel }} <br>
+                        Duration: {{ video.duration }} sec <br>
+                        Published: {{ video.published }}
+                    </p>
+                </div>
+            </a>
         {% endfor %}
         </div>
     {% elif request.method == 'POST' %}

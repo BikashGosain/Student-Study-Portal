@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Signup Page</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/signup.css/">
+
+
+</head>
+<body>
+  <div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+
+  <form action="" method="post">
+    {% csrf_token %}
+    <h3>Signup Here</h3>
+
+    <label for="username">Username</label>
+    <input type="text" placeholder="Username" name="username" id="username" required value="{{ form_data.username|default:'' }}">
+    {% if errors.username %}
+      <p class="error-message">{{ errors.username }}</p>
+    {% endif %}
+
+    <label for="email">Email</label>
+    <input type="email" placeholder="Email" name="email" id="email" required value="{{ form_data.email|default:'' }}">
+    {% if errors.email %}
+      <p class="error-message">{{ errors.email }}</p>
+    {% endif %}
+
+
+    <label for="password1">Password</label>
+    <div class="password-wrapper">
+      <input type="password" placeholder="Password" id="password1" name="password1" required>
+      <i class="fas fa-eye" id="togglePassword1"></i>
+    </div>
+
+    <label for="password2">Confirm Password</label>
+    <div class="password-wrapper">
+      <input type="password" placeholder="Confirm Password" id="password2" name="password2" required>
+      <i class="fas fa-eye" id="togglePassword2"></i>
+    </div>
+    {% if errors.password %}
+      <p class="error-message">{{ errors.password }}</p>
+    {% endif %}
+
+    <button type="submit">Signup</button>
+
+    <p class="signup-text">
+      Already have an account?
+      <a href="{% url 'LoginPage' %}" class="signup-link">Log In</a>
+    </p>
+  </form>
+
+<script src="/static/js/signup.js/"></script>
+</body>
+</html>

@@ -1,6 +1,5 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
-{% load crispy_forms_tags %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'dashboard/css/notes.css' %}">
@@ -38,7 +37,7 @@
         {% csrf_token %}
         <fieldset class="form-group">
             <legend>Create Note</legend>
-        {{ form|crispy }}
+        {{ form }}
         <div class="form-group">
             <button type="submit">Create</button>
         </div>

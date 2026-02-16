@@ -1,6 +1,5 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
-{% load crispy_forms_tags %}
 
 {% block content %}
 <section class="container mt-4 text-center">
@@ -9,7 +8,7 @@
 
     <form method="POST" class="mb-4">
         {% csrf_token %}
-        {{ form|crispy }}   <!-- This renders the input field -->
+        {{ form }}   <!-- This renders the input field -->
         <input class="btn btn-danger" type="submit" value="Search">
     </form>
 {% if api_debug %}

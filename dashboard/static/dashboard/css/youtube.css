@@ -1,0 +1,85 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    text-align: center;
+}
+
+/* Form */
+form {
+    margin-bottom: 2rem;
+}
+
+input[type="submit"] {
+    background-color: #1e90ff;
+    border: none;
+    color: #fff;
+    padding: 0.5rem 1.25rem;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #0f70d4;
+}
+
+/* Videos Grid */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+/* Video Card */
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    overflow: hidden;
+    width: 350px;
+    text-align: left;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.card-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #1e1e2f;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .card {
+        width: 45%;
+    }
+}
+
+@media (max-width: 600px) {
+    .card {
+        width: 100%;
+    }
+}
