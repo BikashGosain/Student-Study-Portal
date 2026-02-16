@@ -1,0 +1,45 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<section class="container mt-4 text-center">
+    <h2>Search Books</h2>
+    <p>Enter a query to browse your favorite books</p>
+
+    <form method="POST" class="mb-4">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input class="btn btn-danger" type="submit" value="Search">
+    </form>
+
+    {% if results %}
+        <div class="row">
+        {% for book in results %}
+            <div class="col-md-4 mb-3">
+                <a href="{{ book.infoLink }}" target="_blank" class="text-decoration-none text-dark">
+                    <div class="card h-100">
+                        {% if book.thumbnail %}
+                        <img src="{{ book.thumbnail }}" class="card-img-top" alt="Thumbnail">
+                        {% endif %}
+                        <div class="card-body text-left">
+                            <h5 class="card-title">{{ book.title }}</h5>
+                            {% if book.subtitle %}<h6 class="card-subtitle mb-2 text-muted">{{ book.subtitle }}</h6>{% endif %}
+                            <p class="card-text">{{ book.description|truncatechars:150 }}</p>
+                        </div>
+                        <div class="card-footer text-left">
+                            <small><strong>Authors:</strong> {{ book.authors }}</small><br>
+                            <small><strong>Category:</strong> {{ book.categories }}</small><br>
+                            <small><strong>Pages:</strong> {{ book.pageCount }}</small><br>
+                            <small><strong>Rating:</strong> {{ book.averageRating }}</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+        <p>No results yet. Enter a query above to search books.</p>
+    {% endif %}
+</section>
+{% endblock content %}

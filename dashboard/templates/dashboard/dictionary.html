@@ -1,0 +1,50 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<section class='text-center container mt-4'>
+    <h2>Student Dictionary</h2>
+    <p>Enter any word to get phonetics, definition, example, synonyms, and audio</p>
+
+    <form method="POST" class="mb-4">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input class="btn btn-danger" type="submit" value="Search">
+    </form>
+
+    {% if result %}
+        {% if result.error %}
+            <h4 class="text-danger">{{ result.error }}</h4>
+        {% else %}
+        <div class="content-section p-3 mt-3 border rounded">
+
+            <div class="custom-header">
+                <h2>{{ result.word }}</h2>
+                {% if result.phonetic %}
+                    <h6>Phonetic: {{ result.phonetic }}</h6>
+                {% endif %}
+                {% if result.audio %}
+                    <audio controls>
+                        <source src="{{ result.audio }}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                {% endif %}
+            </div>
+
+            <hr>
+
+            <p><strong>Definition:</strong> {{ result.definition }}</p>
+            <p><strong>Example:</strong> {{ result.example }}</p>
+
+            {% if result.synonyms %}
+                <p><strong>Synonyms:</strong> {{ result.synonyms|join:", " }}</p>
+            {% endif %}
+
+        </div>
+        {% endif %}
+    {% else %}
+        <p>No word searched yet. Enter a word above to search.</p>
+    {% endif %}
+</section>
+{% endblock content %}

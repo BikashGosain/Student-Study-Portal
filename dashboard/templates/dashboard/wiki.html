@@ -1,0 +1,38 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<section class="container mt-4 text-center">
+    <h2>Search Articles in Wikipedia</h2>
+    <p>Enter your search query to obtain results</p>
+
+    <form method="POST" class="mb-4">
+        {% csrf_token %}
+        {{ form|crispy }}   <!-- This renders the input field -->
+        <input class="btn btn-danger" type="submit" value="Search">
+    </form>
+{% if api_debug %}
+<hr>
+<h5>API Debug:</h5>
+<pre>{{ api_debug }}</pre>
+{% endif %}
+
+    {% if results %}
+        <div class="row">
+            {% for article in results %}
+            <div class="col-md-12 mb-3">
+                <div class="card p-3">
+                    <a href="{{ article.link }}" target="_blank" class="text-decoration-none text-dark">
+                        <h4>{{ article.title }}</h4>
+                    </a>
+                    <p>{{ article.snippet|safe }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No results yet. Enter a query above to search.</p>
+    {% endif %}
+</section>
+{% endblock content %}
