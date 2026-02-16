@@ -1,100 +1,177 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
-{% block extra_css %}<link rel="stylesheet" href="{% static 'dashboard/css/profile.css' %}">
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'dashboard/css/profile.css' %}">
 {% endblock extra_css %}
 
 {% block content %}
-<section class="profile-section">
+<section class="profile-page-section">
+    
+    <!-- User Profile Card -->
+    <div class="profile-container">
+        <div class="profile-user-card">
+            <div class="profile-user-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="profile-user-info">
+                <h1 class="profile-user-name">{{ user.username }}</h1>
+                <p class="profile-user-email">
+                    <i class="fas fa-envelope"></i>
+                    {{ user.email }}
+                </p>
+                <div class="profile-user-meta">
+                    <span class="profile-user-badge">
+                        <i class="fas fa-calendar-alt"></i>
+                        Joined {{ user.date_joined|date:"M d, Y" }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <div class="container">
-        <h2>Due ToDos</h2>
+    <!-- Due ToDos Section -->
+    <div class="profile-container">
+        <div class="profile-section-header">
+            <h2 class="profile-section-title">
+                <i class="fas fa-check-circle"></i>
+                Due ToDos
+            </h2>
+            <span class="profile-section-count">{{ todos|length }}</span>
+        </div>
+        
         {% if todos %}
-        <table class="custom-table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Title</th>
-                    <th>Status</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for todo in todos %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ todo.title }}</td>
-                    <td>
-                        <form method="POST" action="{% url 'update-todo' todo.id %}?next=profile" style="display:inline;">
-    {% csrf_token %}
-    <div class="form-check">
-        <input class="form-check-input"
-               type="checkbox"
-               onchange="this.form.submit()"
-               {% if todo.is_finished %}checked{% endif %}>
-        <label class="form-check-label">
-            Completed
-        </label>
-    </div>
-</form>
-
-                    </td>
-                    <td><a href="{% url 'delete-todo' todo.id %}?next=profile">🗑️</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="profile-table-wrapper">
+            <table class="profile-table profile-todos-table">
+                <thead class="profile-table-head">
+                    <tr>
+                        <th class="profile-col-number">#</th>
+                        <th class="profile-col-title">Title</th>
+                        <th class="profile-col-status">Status</th>
+                        <th class="profile-col-delete">Delete</th>
+                    </tr>
+                </thead>
+                <tbody class="profile-table-body">
+                    {% for todo in todos %}
+                    <tr class="profile-table-row" data-todo-id="{{ todo.id }}">
+                        <td class="profile-cell-number">{{ forloop.counter }}</td>
+                        <td class="profile-cell-title">{{ todo.title }}</td>
+                        <td class="profile-cell-status">
+                            <form method="POST" 
+                                  action="{% url 'update-todo' todo.id %}?next=profile" 
+                                  class="profile-status-form">
+                                {% csrf_token %}
+                                <div class="profile-checkbox-wrapper">
+                                    <input class="profile-checkbox-input"
+                                           type="checkbox"
+                                           id="todo-check-{{ todo.id }}"
+                                           onchange="this.form.submit()"
+                                           {% if todo.is_finished %}checked{% endif %}>
+                                    <label class="profile-checkbox-label" for="todo-check-{{ todo.id }}">
+                                        Completed
+                                    </label>
+                                </div>
+                            </form>
+                        </td>
+                        <td class="profile-cell-delete">
+                            <a href="{% url 'delete-todo' todo.id %}?next=profile" 
+                               class="profile-delete-link"
+                               title="Delete this todo">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         {% else %}
-        <p>No ToDos yet!</p>
+        <div class="profile-empty-state">
+            <div class="profile-empty-icon">
+                <i class="fas fa-clipboard-check"></i>
+            </div>
+            <p class="profile-empty-text">No ToDos yet!</p>
+            <a href="{% url 'todo' %}" class="profile-empty-action">
+                <i class="fas fa-plus"></i>
+                Create Your First ToDo
+            </a>
+        </div>
         {% endif %}
+    </div>
 
-        <h2>Due Homeworks</h2>
+    <!-- Due Homeworks Section -->
+    <div class="profile-container">
+        <div class="profile-section-header">
+            <h2 class="profile-section-title">
+                <i class="fas fa-clipboard-list"></i>
+                Due Homeworks
+            </h2>
+            <span class="profile-section-count">{{ homeworks|length }}</span>
+        </div>
+        
         {% if homeworks %}
-        <table class="custom-table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Subject</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Due Date</th>
-                    <th>Status</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for hw in homeworks %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ hw.subject }}</td>
-                    <td>{{ hw.title }}</td>
-                    <td>{{ hw.description }}</td>
-                    <td>{{ hw.due }}</td>
-                    <td>
-                        <form method="POST" action="{% url 'update-homework' hw.id %}?next=profile" style="display:inline;">
-    {% csrf_token %}
-    <div class="form-check">
-        <input class="form-check-input"
-               type="checkbox"
-               onchange="this.form.submit()"
-               {% if hw.is_finished %}checked{% endif %}>
-        <label class="form-check-label">
-            Completed
-        </label>
-    </div>
-</form>
-
-                    </td>
-                    <td><a href="{% url 'delete-homework' hw.id %}?next=profile">
-    <i class="fa fa-trash fa-2x"></i>
-</a>
-</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="profile-table-wrapper">
+            <table class="profile-table profile-homework-table">
+                <thead class="profile-table-head">
+                    <tr>
+                        <th class="profile-col-number">#</th>
+                        <th class="profile-col-subject">Subject</th>
+                        <th class="profile-col-hw-title">Title</th>
+                        <th class="profile-col-description">Description</th>
+                        <th class="profile-col-due">Due Date</th>
+                        <th class="profile-col-status">Status</th>
+                        <th class="profile-col-delete">Delete</th>
+                    </tr>
+                </thead>
+                <tbody class="profile-table-body">
+                    {% for hw in homeworks %}
+                    <tr class="profile-table-row" data-homework-id="{{ hw.id }}">
+                        <td class="profile-cell-number">{{ forloop.counter }}</td>
+                        <td class="profile-cell-subject">{{ hw.subject }}</td>
+                        <td class="profile-cell-hw-title">{{ hw.title }}</td>
+                        <td class="profile-cell-description">{{ hw.description }}</td>
+                        <td class="profile-cell-due">{{ hw.due }}</td>
+                        <td class="profile-cell-status">
+                            <form method="POST" 
+                                  action="{% url 'update-homework' hw.id %}?next=profile" 
+                                  class="profile-status-form">
+                                {% csrf_token %}
+                                <div class="profile-checkbox-wrapper">
+                                    <input class="profile-checkbox-input"
+                                           type="checkbox"
+                                           id="hw-check-{{ hw.id }}"
+                                           onchange="this.form.submit()"
+                                           {% if hw.is_finished %}checked{% endif %}>
+                                    <label class="profile-checkbox-label" for="hw-check-{{ hw.id }}">
+                                        Completed
+                                    </label>
+                                </div>
+                            </form>
+                        </td>
+                        <td class="profile-cell-delete">
+                            <a href="{% url 'delete-homework' hw.id %}?next=profile" 
+                               class="profile-delete-link"
+                               title="Delete this homework">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         {% else %}
-        <p>No Homeworks yet!</p>
+        <div class="profile-empty-state">
+            <div class="profile-empty-icon">
+                <i class="fas fa-book-open"></i>
+            </div>
+            <p class="profile-empty-text">No Homeworks yet!</p>
+            <a href="{% url 'homework' %}" class="profile-empty-action">
+                <i class="fas fa-plus"></i>
+                Create Your First Homework
+            </a>
+        </div>
         {% endif %}
     </div>
+
 </section>
 {% endblock content %}

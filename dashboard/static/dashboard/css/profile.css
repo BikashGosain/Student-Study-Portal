@@ -1,47 +1,648 @@
-.profile-section {
-    padding: 20px;
-    font-family: Arial, sans-serif;
+/*
+ * Profile Page Styles - Modern & Unique
+ * All classes prefixed with 'profile-'
+ */
+
+/* ==========================================
+   PAGE LAYOUT
+   ========================================== */
+
+.profile-page-section {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.profile-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 2.5rem;
+  padding: 0 1.5rem;
+  animation: profileFadeIn 0.5s ease-out;
+}
+
+@keyframes profileFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================
+   USER PROFILE CARD
+   ========================================== */
+
+.profile-user-card {
+  background: linear-gradient(135deg, #667eea 0%, #4facfe 100%);
+  border-radius: 1.5rem;
+  padding: 3rem;
+  box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  color: #ffffff;
+}
+
+.profile-user-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 400px;
+  height: 400px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.profile-user-card::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: -10%;
+  width: 300px;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.profile-user-avatar {
+  position: relative;
+  z-index: 1;
+  font-size: 8rem;
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.profile-user-info {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+}
+
+.profile-user-name {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-user-email {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.profile-user-email i {
+  font-size: 1.1rem;
+}
+
+.profile-user-meta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.profile-user-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+}
+
+.profile-user-badge i {
+  font-size: 0.9rem;
+}
+
+/* ==========================================
+   SECTION HEADER
+   ========================================== */
+
+.profile-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 3px solid #e2e8f0;
+}
+
+.profile-section-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1a202c;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.profile-section-title i {
+  color: #667eea;
+  font-size: 1.5rem;
+}
+
+.profile-section-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0 0.75rem;
+  background: linear-gradient(135deg, #667eea 0%, #4facfe 100%);
+  color: #ffffff;
+  border-radius: 2rem;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* ==========================================
+   TABLES
+   ========================================== */
+
+.profile-table-wrapper {
+  background: #ffffff;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.profile-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.profile-table-head {
+  background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+}
+
+.profile-table-head th {
+  padding: 1.25rem 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.85rem;
+  color: #ffffff;
+  text-align: left;
+  border: none;
+}
+
+.profile-col-number {
+  width: 60px;
+  text-align: center !important;
+}
+
+.profile-col-title {
+  width: 40%;
+}
+
+.profile-col-subject {
+  width: 15%;
+}
+
+.profile-col-hw-title {
+  width: 18%;
+}
+
+.profile-col-description {
+  width: 25%;
+}
+
+.profile-col-due {
+  width: 12%;
+}
+
+.profile-col-status {
+  width: 20%;
+}
+
+.profile-col-delete {
+  width: 80px;
+  text-align: center !important;
+}
+
+/* Table Body */
+.profile-table-body {
+  background: #ffffff;
+}
+
+.profile-table-row {
+  transition: all 0.2s ease-in-out;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.profile-table-row:hover {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(79, 172, 254, 0.05) 100%);
+  transform: scale(1.005);
+}
+
+.profile-table-row:last-child {
+  border-bottom: none;
+}
+
+/* Table Cells */
+.profile-table-body td {
+  padding: 1rem;
+  vertical-align: middle;
+  color: #1a202c;
+  font-size: 0.95rem;
+}
+
+.profile-cell-number {
+  font-weight: 700;
+  color: #667eea;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.profile-cell-title,
+.profile-cell-hw-title {
+  font-weight: 600;
+  color: #1a202c;
+}
+
+.profile-cell-subject {
+  font-weight: 600;
+  color: #4facfe;
+}
+
+.profile-cell-description {
+  color: #718096;
+  line-height: 1.5;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-cell-due {
+  color: #ed8936;
+  font-weight: 500;
+}
+
+.profile-cell-status {
+  padding: 0.5rem 1rem;
+}
+
+.profile-cell-delete {
+  text-align: center;
+}
+
+/* ==========================================
+   CHECKBOX STYLING
+   ========================================== */
+
+.profile-status-form {
+  margin: 0;
+  display: inline-block;
+  width: 100%;
+}
+
+.profile-checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  transition: background 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+.profile-checkbox-wrapper:hover {
+  background: rgba(102, 126, 234, 0.08);
+}
+
+.profile-checkbox-input {
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+  accent-color: #48bb78;
+  transition: transform 0.15s ease-in-out;
+  margin: 0;
+}
+
+.profile-checkbox-input:hover {
+  transform: scale(1.1);
+}
+
+.profile-checkbox-input:checked {
+  filter: drop-shadow(0 0 8px rgba(72, 187, 120, 0.6));
+}
+
+.profile-checkbox-label {
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1a202c;
+  margin: 0;
+}
+
+/* ==========================================
+   DELETE LINK
+   ========================================== */
+
+.profile-delete-link {
+  color: #f56565;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-size: 1.25rem;
+}
+
+.profile-delete-link:hover {
+  color: #ffffff;
+  background: #f56565;
+  transform: scale(1.15) rotate(10deg);
+  box-shadow: 0 4px 12px rgba(245, 101, 101, 0.3);
+}
+
+.profile-delete-link i {
+  pointer-events: none;
+}
+
+/* ==========================================
+   EMPTY STATE
+   ========================================== */
+
+.profile-empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.profile-empty-icon {
+  font-size: 4rem;
+  color: #cbd5e0;
+  margin-bottom: 1.5rem;
+}
+
+.profile-empty-text {
+  font-size: 1.25rem;
+  color: #718096;
+  margin-bottom: 2rem;
+}
+
+.profile-empty-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #4facfe 100%);
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.profile-empty-action:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.profile-empty-action i {
+  font-size: 1.1rem;
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
+
+@media (max-width: 1024px) {
+  .profile-container {
+    padding: 0 1rem;
+  }
+  
+  .profile-user-card {
+    padding: 2.5rem;
+    gap: 2rem;
+  }
+  
+  .profile-user-avatar {
+    font-size: 6rem;
+    width: 120px;
+    height: 120px;
+  }
+  
+  .profile-user-name {
+    font-size: 2rem;
+  }
+  
+  .profile-cell-description {
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 0 0.75rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* User Card */
+  .profile-user-card {
+    flex-direction: column;
     text-align: center;
-}
-
-.custom-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-.custom-table th, .custom-table td {
-    border: 1px solid #333;
-    padding: 8px;
-    text-align: center;
-}
-
-.custom-table th {
-    background-color: #222;
-    color: #fff;
-}
-
-.custom-table tr:nth-child(even) {
-    background-color: #f5f5f5;
-}
-
-.custom-checkbox {
-    display: flex;
-    align-items: center;
+    padding: 2rem 1.5rem;
+    gap: 1.5rem;
+  }
+  
+  .profile-user-avatar {
+    font-size: 5rem;
+    width: 100px;
+    height: 100px;
+  }
+  
+  .profile-user-name {
+    font-size: 1.75rem;
+  }
+  
+  .profile-user-email {
+    font-size: 1rem;
     justify-content: center;
-    gap: 5px;
+  }
+  
+  .profile-user-meta {
+    justify-content: center;
+  }
+  
+  /* Section Header */
+  .profile-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .profile-section-title {
+    font-size: 1.5rem;
+  }
+  
+  /* Tables */
+  .profile-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .profile-todos-table {
+    min-width: 600px;
+  }
+  
+  .profile-homework-table {
+    min-width: 900px;
+  }
+  
+  .profile-table-head th {
+    padding: 1rem 0.75rem;
+    font-size: 0.75rem;
+  }
+  
+  .profile-table-body td {
+    padding: 0.875rem 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  .profile-checkbox-label {
+    font-size: 0.8rem;
+  }
+  
+  /* Empty State */
+  .profile-empty-state {
+    padding: 3rem 1.5rem;
+  }
+  
+  .profile-empty-icon {
+    font-size: 3rem;
+  }
+  
+  .profile-empty-text {
+    font-size: 1.1rem;
+  }
+  
+  .profile-empty-action {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+  }
 }
 
-.custom-btn {
-    display: inline-block;
-    padding: 8px 16px;
-    background-color: #e74c3c;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    margin-top: 10px;
+@media (max-width: 480px) {
+  .profile-user-card {
+    padding: 1.5rem 1rem;
+  }
+  
+  .profile-user-avatar {
+    font-size: 4rem;
+    width: 80px;
+    height: 80px;
+  }
+  
+  .profile-user-name {
+    font-size: 1.5rem;
+  }
+  
+  .profile-user-email {
+    font-size: 0.9rem;
+  }
+  
+  .profile-user-badge {
+    font-size: 0.85rem;
+    padding: 0.4rem 1rem;
+  }
+  
+  .profile-section-title {
+    font-size: 1.25rem;
+  }
+  
+  .profile-section-title i {
+    font-size: 1.1rem;
+  }
+  
+  .profile-todos-table {
+    min-width: 500px;
+  }
+  
+  .profile-homework-table {
+    min-width: 800px;
+  }
+  
+  .profile-cell-description {
+    max-width: 150px;
+  }
 }
 
-.custom-btn:hover {
-    background-color: #c0392b;
+/* ==========================================
+   ANIMATIONS
+   ========================================== */
+
+@keyframes profilePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+.profile-section-count {
+  animation: profilePulse 2s ease-in-out infinite;
+}
+
+/* ==========================================
+   PRINT STYLES
+   ========================================== */
+
+@media print {
+  .profile-delete-link,
+  .profile-checkbox-wrapper,
+  .profile-empty-action {
+    display: none;
+  }
+  
+  .profile-user-card {
+    background: #667eea;
+    box-shadow: none;
+    page-break-after: always;
+  }
+  
+  .profile-table-wrapper {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+  
+  .profile-table-row {
+    page-break-inside: avoid;
+  }
 }

@@ -19,28 +19,76 @@
 <body>
     <header>
         <nav class="navbar">
+            {% with current=request.resolver_match.url_name %}
             <a class="navbar-brand" href="/">Student Study Portal</a>
-            <button class="navbar-toggler">&#9776;</button>
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">Profile</a></li>
+            <button class="navbar-toggler" id="navbarToggler" aria-label="Toggle navigation" aria-controls="navbarNav" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="navbar-nav" id="navbarNav">
+                <li class="nav-item">
+                    <a class="nav-link {% if current == 'home' %}active{% endif %}" href="/" {% if current == 'home' %}aria-current="page"{% endif %}>Home</a>
+                </li>
+                
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link {% if current == 'profile' %}active{% endif %}" href="{% url 'profile' %}" {% if current == 'profile' %}aria-current="page"{% endif %}>Profile</a>
+                </li>
+                {% endif %}
+                
                 <li class="nav-item dropdown">
-                    <a class="nav-link">Options ▼</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'books' %}">Books</a></li>
-                        <li><a class="dropdown-item" href="{% url 'wiki' %}">Wikipedia</a></li>
-                        <li><a class="dropdown-item" href="{% url 'dictionary' %}">Dictionary</a></li>
-                        <li><a class="dropdown-item" href="{% url 'youtube' %}">Youtube</a></li>
-                        <li><a class="dropdown-item" href="{% url 'todo' %}">To-do</a></li>
-                        <li><a class="dropdown-item" href="{% url 'homework' %}">Homework</a></li>
-                        <li><a class="dropdown-item" href="{% url 'notes' %}">Notes</a></li>
-                        <li><a class="dropdown-item" href="{% url 'conversion' %}">Conversion</a></li>
+                    <button class="nav-link dropdown-toggle {% if current == 'books' or current == 'wiki' or current == 'dictionary' or current == 'youtube' or current == 'todo' or current == 'homework' or current == 'notes' or current == 'conversion' %}active{% endif %}" type="button" id="optionsToggle" aria-haspopup="true" aria-expanded="false" aria-controls="optionsMenu">
+                        Options <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <ul class="dropdown-menu" id="optionsMenu" aria-labelledby="optionsToggle">
+                        <li><a class="dropdown-item {% if current == 'books' %}active{% endif %}" href="{% url 'books' %}" {% if current == 'books' %}aria-current="page"{% endif %}>
+                            <i class="fas fa-book"></i> Books
+                        </a></li>
+                        <li><a class="dropdown-item {% if current == 'wiki' %}active{% endif %}" href="{% url 'wiki' %}" {% if current == 'wiki' %}aria-current="page"{% endif %}>
+                            <i class="fab fa-wikipedia-w"></i> Wikipedia
+                        </a></li>
+                        <li><a class="dropdown-item {% if current == 'dictionary' %}active{% endif %}" href="{% url 'dictionary' %}" {% if current == 'dictionary' %}aria-current="page"{% endif %}>
+                            <i class="fas fa-book-open"></i> Dictionary
+                        </a></li>
+                        <li><a class="dropdown-item {% if current == 'youtube' %}active{% endif %}" href="{% url 'youtube' %}" {% if current == 'youtube' %}aria-current="page"{% endif %}>
+                            <i class="fab fa-youtube"></i> Youtube
+                        </a></li>
+                        <li><a class="dropdown-item {% if current == 'todo' %}active{% endif %}" href="{% url 'todo' %}" {% if current == 'todo' %}aria-current="page"{% endif %}>
+                            <i class="fas fa-check-circle"></i> To-do
+                        </a></li>
+                        <li><a class="dropdown-item {% if current == 'homework' %}active{% endif %}" href="{% url 'homework' %}" {% if current == 'homework' %}aria-current="page"{% endif %}>
+                            <i class="fas fa-clipboard-list"></i> Homework
+                        </a></li>
+                        <li><a class="dropdown-item {% if current == 'notes' %}active{% endif %}" href="{% url 'notes' %}" {% if current == 'notes' %}aria-current="page"{% endif %}>
+                            <i class="fas fa-sticky-note"></i> Notes
+                        </a></li>
+                        <li><a class="dropdown-item {% if current == 'conversion' %}active{% endif %}" href="{% url 'conversion' %}" {% if current == 'conversion' %}aria-current="page"{% endif %}>
+                            <i class="fas fa-exchange-alt"></i> Conversion
+                        </a></li>
                     </ul>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'LogoutPage' %}">Logout</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'SignupPage' %}">Register</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'LoginPage' %}">Login</a></li>
+                
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LogoutPage' %}">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if current == 'LoginPage' %}active{% endif %}" href="{% url 'LoginPage' %}" {% if current == 'LoginPage' %}aria-current="page"{% endif %}>
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if current == 'SignupPage' %}active{% endif %}" href="{% url 'SignupPage' %}" {% if current == 'SignupPage' %}aria-current="page"{% endif %}>
+                            <i class="fas fa-user-plus"></i> Register
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
+            {% endwith %}
         </nav>
     </header>
 
@@ -50,7 +98,7 @@
             {% for message in messages %}
             <div class="alert alert-{{ message.tags }}">
                 {{ message }}
-                <button onclick="this.parentElement.style.display='none';">&times;</button>
+                <button class="alert-close" onclick="this.parentElement.style.display='none';">&times;</button>
             </div>
             {% endfor %}
         </div>
@@ -59,14 +107,117 @@
         {% block content %}{% endblock content %}
     </main>
 
-    <!-- Base JS -->
+    <!-- Base JavaScript -->
     <script>
-        // Mobile navbar toggle
-        const toggler = document.querySelector('.navbar-toggler');
-        const nav = document.querySelector('.navbar-nav');
-        toggler.addEventListener('click', () => {
-            nav.classList.toggle('show');
-        });
+        (() => {
+            const toggler = document.getElementById('navbarToggler');
+            const nav = document.getElementById('navbarNav');
+            const dropdowns = document.querySelectorAll('.dropdown');
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+            if (!toggler || !nav) {
+                return;
+            }
+
+            const isMobileNav = () => window.innerWidth <= 768;
+            const isTouchDevice = () =>
+                window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+            const setExpanded = (element, expanded) => {
+                if (element) {
+                    element.setAttribute('aria-expanded', String(expanded));
+                }
+            };
+
+            const closeDropdowns = (except) => {
+                dropdowns.forEach(dropdown => {
+                    if (dropdown !== except) {
+                        dropdown.classList.remove('show');
+                        const toggle = dropdown.querySelector('.dropdown-toggle');
+                        setExpanded(toggle, false);
+                    }
+                });
+            };
+
+            const closeNav = () => {
+                nav.classList.remove('show');
+                toggler.classList.remove('active');
+                setExpanded(toggler, false);
+                closeDropdowns();
+            };
+
+            // Mobile navbar toggle
+            toggler.addEventListener('click', (event) => {
+                event.stopPropagation();
+                const isOpen = nav.classList.toggle('show');
+                toggler.classList.toggle('active', isOpen);
+                setExpanded(toggler, isOpen);
+                if (!isOpen) {
+                    closeDropdowns();
+                }
+            });
+
+            // Dropdown toggle (touch devices and collapsed nav)
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', (event) => {
+                    const dropdown = toggle.closest('.dropdown');
+                    if (!dropdown) {
+                        return;
+                    }
+
+                    const shouldToggle = isTouchDevice() || isMobileNav();
+                    if (!shouldToggle) {
+                        return;
+                    }
+
+                    event.preventDefault();
+                    const isOpen = dropdown.classList.toggle('show');
+                    setExpanded(toggle, isOpen);
+                    if (isOpen) {
+                        closeDropdowns(dropdown);
+                    }
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (event) => {
+                if (!event.target.closest('.navbar')) {
+                    closeNav();
+                }
+            });
+
+            // Close mobile menu when clicking a link (except dropdown toggle)
+            document.querySelectorAll('.nav-link, .dropdown-item').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (link.classList.contains('dropdown-toggle')) {
+                        return;
+                    }
+                    if (isMobileNav()) {
+                        closeNav();
+                    }
+                });
+            });
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                if (!isMobileNav()) {
+                    nav.classList.remove('show');
+                    toggler.classList.remove('active');
+                    setExpanded(toggler, false);
+                    closeDropdowns();
+                }
+            });
+
+            // Auto-hide alerts after 5 seconds
+            document.querySelectorAll('.alert').forEach(alert => {
+                setTimeout(() => {
+                    alert.style.animation = 'slideOut 0.3s ease-out';
+                    setTimeout(() => {
+                        alert.style.display = 'none';
+                    }, 300);
+                }, 5000);
+            });
+        })();
     </script>
 
     <!-- Block for page-specific JS -->
