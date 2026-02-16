@@ -1,0 +1,100 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'dashboard/css/profile.css' %}">
+{% endblock extra_css %}
+
+{% block content %}
+<section class="profile-section">
+
+    <div class="container">
+        <h2>Due ToDos</h2>
+        {% if todos %}
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for todo in todos %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ todo.title }}</td>
+                    <td>
+                        <form method="POST" action="{% url 'update-todo' todo.id %}?next=profile" style="display:inline;">
+    {% csrf_token %}
+    <div class="form-check">
+        <input class="form-check-input"
+               type="checkbox"
+               onchange="this.form.submit()"
+               {% if todo.is_finished %}checked{% endif %}>
+        <label class="form-check-label">
+            Completed
+        </label>
+    </div>
+</form>
+
+                    </td>
+                    <td><a href="{% url 'delete-todo' todo.id %}?next=profile">🗑️</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No ToDos yet!</p>
+        {% endif %}
+
+        <h2>Due Homeworks</h2>
+        {% if homeworks %}
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Subject</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hw in homeworks %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ hw.subject }}</td>
+                    <td>{{ hw.title }}</td>
+                    <td>{{ hw.description }}</td>
+                    <td>{{ hw.due }}</td>
+                    <td>
+                        <form method="POST" action="{% url 'update-homework' hw.id %}?next=profile" style="display:inline;">
+    {% csrf_token %}
+    <div class="form-check">
+        <input class="form-check-input"
+               type="checkbox"
+               onchange="this.form.submit()"
+               {% if hw.is_finished %}checked{% endif %}>
+        <label class="form-check-label">
+            Completed
+        </label>
+    </div>
+</form>
+
+                    </td>
+                    <td><a href="{% url 'delete-homework' hw.id %}?next=profile">
+    <i class="fa fa-trash fa-2x"></i>
+</a>
+</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No Homeworks yet!</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock content %}

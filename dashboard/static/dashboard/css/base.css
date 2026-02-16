@@ -1,0 +1,167 @@
+/* ==================== Reset & Base Styles ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+/* ==================== Header & Navbar ==================== */
+header {
+    background-color: #1e1e2f;
+    color: #fff;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    flex-wrap: wrap;
+}
+
+.navbar-brand {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.navbar-nav {
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    display: block;
+    padding: 0.5rem 0.8rem;
+    color: #fff;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background-color: #3a3f5c;
+}
+
+/* Dropdown */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #2b2f4c;
+    min-width: 160px;
+    border-radius: 5px;
+    padding: 0.5rem 0;
+    z-index: 100;
+    flex-direction: column;
+}
+
+.dropdown-item {
+    padding: 0.5rem 1rem;
+    color: #fff;
+    transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #3a3f5c;
+}
+
+.nav-item:hover .dropdown-menu {
+    display: flex;
+}
+
+/* Navbar toggler for mobile */
+.navbar-toggler {
+    display: none;
+    background: #3a3f5c;
+    border: none;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* ==================== Alerts ==================== */
+.alert {
+    padding: 0.75rem 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    position: relative;
+    border: 1px solid transparent;
+}
+
+.alert-success { background-color: #d4edda; color: #155724; border-color: #c3e6cb; }
+.alert-danger { background-color: #f8d7da; color: #721c24; border-color: #f5c6cb; }
+.alert-info { background-color: #d1ecf1; color: #0c5460; border-color: #bee5eb; }
+.alert-warning { background-color: #fff3cd; color: #856404; border-color: #ffeeba; }
+
+.alert button {
+    position: absolute;
+    top: 0.2rem;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    color: inherit;
+}
+
+/* ==================== Main Content ==================== */
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* ==================== Responsive Styles ==================== */
+@media (max-width: 768px) {
+    .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+        display: none;
+    }
+
+    .navbar-nav.show {
+        display: flex;
+    }
+
+    .navbar-toggler {
+        display: block;
+    }
+
+    .nav-item:hover .dropdown-menu {
+        position: static;
+    }
+
+    .dropdown-menu {
+        display: none;
+        width: 100%;
+    }
+
+    .nav-item:hover .dropdown-menu {
+        display: flex;
+    }
+}

@@ -37,3 +37,20 @@ class TodoForm(forms.ModelForm):
     class Meta:
         model = Todo
         fields = ['title', 'is_finished']
+
+class ConversionForm(forms.Form):
+    input_value = forms.FloatField(
+        label="Enter value",
+        widget=forms.NumberInput(attrs={"class": "form-control", "placeholder": "Enter value"})
+    )
+
+    input_type = forms.ChoiceField(
+        choices=[
+            ('km_to_m', 'Kilometers to Meters'),
+            ('m_to_km', 'Meters to Kilometers'),
+            ('c_to_f', 'Celsius to Fahrenheit'),
+            ('f_to_c', 'Fahrenheit to Celsius'),
+        ],
+        label="Conversion Type",
+        widget=forms.Select(attrs={"class": "form-control"})
+    )

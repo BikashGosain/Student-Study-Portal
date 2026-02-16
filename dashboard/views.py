@@ -1,9 +1,10 @@
 from urllib import request
 import requests
 from django.contrib import messages
-from django.shortcuts import redirect, render
-
+from django.shortcuts import redirect, render, get_object_or_404
+import scrapetube
 from .forms import *
+
 
 # Create your views here.
 
@@ -66,18 +67,19 @@ def homework(request):
     return render(request, 'dashboard/homework.html', context)
 
 def update_homework(request, pk=None):
-    homework = Homework.objects.get(id=pk, user=request.user)
+    homework = get_object_or_404(Homework, id=pk, user=request.user)
     homework.is_finished = not homework.is_finished
     homework.save()
-    return redirect('homework')
+    next_page = request.GET.get('next', 'homework')
+    return redirect(next_page)
 
-def delete_homework(request, pk=None):
-    Homework.objects.get(id=pk).delete()
-    messages.success(request, f'Homework deleted from {request.user.username} successfully!')
-    return redirect('homework')
 
-import scrapetube
-
+def delete_homework(request, pk):
+    hw = get_object_or_404(Homework, id=pk, user=request.user)
+    hw.delete()
+    messages.success(request, f'Homework "{hw.title}" deleted successfully!')
+    next_page = request.GET.get('next', 'profile')
+    return redirect(next_page)
 
 
 def youtube(request):
@@ -166,15 +168,21 @@ def todo(request):
     return render(request, 'dashboard/todo.html', context)
 
 def update_todo(request, pk=None):
-    todo = Todo.objects.get(id=pk, user=request.user)
+    todo = get_object_or_404(Todo, id=pk, user=request.user)
     todo.is_finished = not todo.is_finished
     todo.save()
-    return redirect('todo')
+
+    next_page = request.GET.get('next', 'todo')
+    return redirect(next_page)
+
 
 def delete_todo(request, pk=None):
-    Todo.objects.get(id=pk).delete()
+    todo = get_object_or_404(Todo, id=pk)
+    todo.delete()
     messages.success(request, f'Todo deleted from {request.user.username} successfully!')
-    return redirect('todo')
+    next_page = request.GET.get('next', 'todo')
+
+    return redirect(next_page)
 
 def books(request):
     result_list = []  # initialize empty list
@@ -283,3 +291,39 @@ def wiki(request):
         form = DashboardForm()
 
     return render(request, 'dashboard/wiki.html', {'form': form, 'results': results, 'api_debug': api_debug})
+
+def conversion(request):
+    result = None
+    if request.method == "POST":
+        form = ConversionForm(request.POST)
+        if form.is_valid():
+            value = form.cleaned_data['input_value']
+            conv_type = form.cleaned_data['input_type']
+
+            if conv_type == 'km_to_m':
+                result = value * 1000
+            elif conv_type == 'm_to_km':
+                result = value / 1000
+            elif conv_type == 'c_to_f':
+                result = (value * 9/5) + 32
+            elif conv_type == 'f_to_c':
+                result = (value - 32) * 5/9
+    else:
+        form = ConversionForm()
+
+    context = {
+        'form': form,
+        'result': result
+    }
+    return render(request, 'dashboard/conversion.html', context)
+
+
+def profile(request):
+    todos = Todo.objects.filter(user=request.user).order_by('created_at')
+    homeworks = Homework.objects.filter(user=request.user).order_by('due')
+
+    context = {
+        'todos': todos,
+        'homeworks': homeworks,
+    }
+    return render(request, 'dashboard/profile.html', context)
