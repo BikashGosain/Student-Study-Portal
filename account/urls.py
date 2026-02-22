@@ -15,3 +15,8 @@ urlpatterns = [
     # User logout
     path('LogoutPage/', views.LogoutPage, name='LogoutPage'),
 ]
+# 👇 custom 404 handler
+handler404 = 'account.views.custom_404'
+handler400 = 'account.views.custom_400'
+handler403 = 'account.views.custom_403'
+handler500 = 'account.views.custom_500'

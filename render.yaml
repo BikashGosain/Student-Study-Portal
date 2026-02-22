@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: django-app
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn studentstudyportal.wsgi:application"
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: studentstudyportal.settings
