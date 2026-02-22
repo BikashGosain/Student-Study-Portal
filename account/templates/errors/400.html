@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>403 - Forbidden</title>
+    <title>400 - Bad Request</title>
 {% load static %}
 <link rel="stylesheet" href="{% static 'errors/error-pages.css' %}"></head>
 <body>
     <div class="ep-error-container">
-        <div class="ep-error-card ep-error-403">
-            <div class="ep-icon">🔒</div>
-            <h1 class="ep-error-code">403</h1>
-            <h2 class="ep-error-title">Access Denied</h2>
-            <p class="ep-error-message">You don't have permission to view this page.</p>
+        <div class="ep-error-card ep-error-400">
+            <div class="ep-icon">⚠️</div>
+            <h1 class="ep-error-code">400</h1>
+            <h2 class="ep-error-title">Bad Request</h2>
+            <p class="ep-error-message">Your request is invalid. Please check and try again.</p>
             <div class="ep-error-actions">
                 <a href="javascript:history.length > 1 ? history.back() : '{% url 'home' %}'" class="ep-btn ep-btn-secondary">
                     ← Go Back
