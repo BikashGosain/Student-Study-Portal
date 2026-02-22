@@ -1,6 +1,9 @@
 # 📚 Student Study Portal
 
 A full-stack web application built with **Django** that helps students manage their academic activities through a centralized, interactive dashboard. The platform combines productivity tools, learning resources, and academic utilities into a single system — reducing the need to juggle multiple disconnected apps.
+---
+
+Live: https://student-study-portal-lrz7.onrender.com
 
 ---
 
